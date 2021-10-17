@@ -1,19 +1,21 @@
-const Sequelize = require('sequelize');
+// Import and require mysql2
+const mysql = require('mysql2');
 
-// Create a connection object
-const sequelize = new Sequelize(
-  // Database name
-  'employees_DB',
-  // User
-  'root',
-  // Password
-  'BearsWinOnSunday!',
-  {
-    // Database location
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-  }
-);
+const db = mysql.createConnection(
+    {
+      host: 'localhost',
+      // MySQL username,
+      user: 'root',
+      // MySQL password
+      password: 'BearsWinOnSunday!',
+      database: 'courses_db'
+    },
+    console.log(`Connected to the employees_db database.`)
+  );
 
-module.exports = sequelize;
+  // to throw error if needed
+  db.connect(function (err){
+    if (err) throw(err);
+  })
+
+module.exports = db;
