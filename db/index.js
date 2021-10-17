@@ -1,50 +1,61 @@
-// //will have to create classes here
-
-// class Employee {
-//     constructor (name, id, email) {
-//         this.name = name;
-//         this.id = id;
-//         this.email = email;
-//     }
-//     getName() {
-//         return this.name;
-//     }
-//     getId() {
-//         return this.id;
-//     }
-//     getEmail() {
-//         return this.email;
-//     }
-//     getRole() {
-//         return "Employee";
-//     }
-// }
-
-// class Manager extends Employee {
-//     constructor(name,id,email,officeNumber){
-//         super(name,id,email)
-//         this.officeNumber = officeNumber;
-//     }
-//     getOfficeNumber(){
-//         return this.officeNumber
-
-//     };
-//     getRole() {
-//         return "Manager"
-//     }
-// }
-
-// module.exports=  Manager;
+const db = require('./connection');
+const inquirer = require("inquirer");
+const cTable = require('console.table');
 
 
+addNewEmployee = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the first name of employee?',
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the last name name of employee?',
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'Please enter the role id of the new employee:',
+        },
+        {
+            type: 'input',
+            name: 'manager_id',
+            message: 'Please enter the manager id of the new employee:',
+        },
+
+    ]).then(function (res) {
+        const first_name = res.first_name;
+        console.log(res);
+        const last_name = res.last_name;
+        const role_id = res.role_id;
+        const sql = `INSERT INTO employee SET ?`
+        db.query(sql, { first_name: res.first_name, last_name: res.last_name, role_id: res.role_id, manager_id: res.manager_id }, function (err, res) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(`Employee ${first_name} ${last_name} with was added`);
+             
+            }
+        })
+    })
+}
 
 
-// module.exports = Employee;
+// addNewRole
+// addNewDept
+// removeEmployee
+// removeDept
+// updateEmployeeRole
+// viewRoles
+// viewDepartments
 
-const db = require('./db/connection');
 
-
+//exporting functions to used in other index file
 module.exports = {
-    addNewEmployee,addNewRole,addNewDept,removeEmployee,removeDept,
-    updateEmployeeRole,viewRoles,viewDepartments
- }
+                addNewEmployee,
+                //  addNewRole, addNewDept, removeEmployee, removeDept,
+                // updateEmployeeRole, viewRoles, viewDepartments
+            }
