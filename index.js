@@ -40,13 +40,13 @@ function startMenu () {
     ///will connect each prompt to the function
     .then((data) => {
       switch (data.selection) {
-        case 'Add Employee':
+        case 'Add an Employee':
           addNewEmployee();
           break;
-        case 'Add Role':
+        case 'Add a Role':
           addNewRole();
           break;
-        case 'Add Department':
+        case 'Add a Department':
           addNewDept();
           break;
         case 'Remove Employee':
@@ -58,16 +58,16 @@ function startMenu () {
         case 'Remove Department':
           removeDept();
           break;
-        case 'Update Employee Role':
+        case 'Update an Employee Role':
           updateEmployeeRole();
           break;
         case 'View All Employees':
-          viewAllEmployees();
+          viewEmployees();
           break;
-        case 'View Roles':
+        case 'View All Roles':
           viewRoles();
           break;
-        case 'View Departments':
+        case 'View All Departments':
           viewDepartments();
           break;
         default:
