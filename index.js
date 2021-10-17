@@ -11,8 +11,4 @@ db.query('SELECT * FROM department', function (err, results) {
    if(err){console.log(err);} else{ console.log("test",results)};
   });
 
-// //test that was able to connect
-// sequelize.sync().then(() => {
-//    sequelize.authenticate();console.log('Connection has been established successfully.');
-//   });
 
