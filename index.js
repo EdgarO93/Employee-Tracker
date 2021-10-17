@@ -71,6 +71,7 @@ function startMenu () {
           viewDepartments();
           break;
         default:
+          console.log ('Thank you for using!')
           db.end();
       }
     });
