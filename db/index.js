@@ -124,8 +124,7 @@ function addNewDept() {
   };
 // removeEmployee-last
 // removeDept- last
-// viewRoles
-// viewDepartments
+
 
 // Update an employee's role
 function updateEmployeeRole() {
@@ -179,6 +178,34 @@ function viewEmployees() {
     });
   };
 
+  // View departments
+function viewDepartments() {
+    const sql = `SELECT * FROM department`;
+    // console.log(sql);
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err)
+        }
+        console.table (rows);
+        let action= "Above is all the departments table."
+        Menu(action);
+    });
+  };
+  
+  // View roles
+  function viewRoles() {
+    const sql = `SELECT * FROM role`;
+    // console.log(sql);
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err)
+        }
+        console.table (rows);
+        let action= "Above is all the roles table."
+        Menu(action);
+    });
+  };
+  
 
 //reference for menu to start over
 function Menu (action) {
@@ -248,7 +275,7 @@ function Menu (action) {
 
 //exporting functions to used in other index file
 module.exports = {
-                addNewEmployee,updateEmployeeRole,addNewRole, addNewDept,viewEmployees
+                addNewEmployee,updateEmployeeRole,addNewRole, addNewDept,viewEmployees,viewRoles, viewDepartments
                 //removeEmployee, removeDept,
-                // ç viewRoles, viewDepartments
+           
             }
