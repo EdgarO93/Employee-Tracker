@@ -77,7 +77,9 @@ function startMenu () {
           db.end();
       }
     });
+
 };
+
 
 
 // A function to initialize app
@@ -88,3 +90,5 @@ startMenu();
 
 // Function call to initialize app
 init();
+
+
