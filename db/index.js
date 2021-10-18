@@ -90,7 +90,7 @@ function updateEmployeeRole() {
             if (err) {
                 console.log(err)
             } else {
-                console.log(`The e was edited`);
+                console.log(`The role was edited`);
                 Menu()
             }
         }); 
