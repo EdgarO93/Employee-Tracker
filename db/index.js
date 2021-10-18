@@ -157,8 +157,27 @@ function updateEmployeeRole() {
         }); 
     })
 };
-
-
+// to see all employees
+function viewEmployees() {
+    const sql = `SELECT 
+        employee.first_name, 
+        employee.last_name, 
+        role.title, 
+        role.salary,
+        employee.manager_id
+        FROM employee 
+        LEFT JOIN role ON employee.role_id = role.id`;
+  
+    // console.log(sql);
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err)
+        }
+        console.table (rows);
+        let action= "Above is all the employees table."
+        Menu(action);
+    });
+  };
 
 
 //reference for menu to start over
@@ -229,7 +248,7 @@ function Menu (action) {
 
 //exporting functions to used in other index file
 module.exports = {
-                addNewEmployee,updateEmployeeRole,addNewRole, addNewDept,
+                addNewEmployee,updateEmployeeRole,addNewRole, addNewDept,viewEmployees
                 //removeEmployee, removeDept,
                 // ç viewRoles, viewDepartments
             }
