@@ -37,22 +37,23 @@ addNewEmployee = () => {
             if (err) {
                 console.log(err)
             } else {
-                console.log(`Employee ${first_name} ${last_name} with was added`)
+                var action=`Employee ${first_name} ${last_name} with was added!`
+                Menu(action);
             }// runs prompt to return to menu or stop
-            inquirer.prompt([
-                {
-                    type: "list",
-                    name: "addMembers",
-                    message: "Would you like to add another employee?",
-                    choices: ["yes", "no"],
-                },
-            ]) .then(function ({addMembers }) {
-                if (addMembers === "yes") {
-                    startMenu();
-                } else {
-                    console.log ('Thank you for using!')
-                }
-            })
+            // inquirer.prompt([
+            //     {
+            //         type: "list",
+            //         name: "addMembers",
+            //         message: "Would you like to add another employee?",
+            //         choices: ["yes", "no"],
+            //     },
+            // ]) .then(function ({addMembers }) {
+            //     if (addMembers === "yes") {
+            //         startMenu();
+            //     } else {
+            //         console.log ('Thank you for using!')
+            //     }
+            // })
         })
     })
 }
@@ -60,20 +61,55 @@ addNewEmployee = () => {
 
 // addNewRole
 // addNewDept
-// removeEmployee
-// removeDept
-// updateEmployeeRole
+// removeEmployee-last
+// removeDept- last
 // viewRoles
 // viewDepartments
+
+// Update an employee's role
+function updateEmployeeRole() {
+    inquirer
+        .prompt([
+            {   type: 'number',
+                name: "employee_id",
+                message: 'What is the employee ID you want to update?',
+            },
+            {
+                type: 'number',
+                name: "role_id",
+                message: 'What is the new role ID of this employee?',
+          
+            }
+        ])
+    .then(function(res) {
+        const employee_id = res.employee_id;
+        console.log(res);
+        const role_id = res.role_id;
+        const sql = `UPDATE employees SET ? WHERE id = ${employee_id}`
+        db.query(sql, {role_id:res.role_id}, function (err, res) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(`The e was edited`);
+                Menu()
+            }
+        }); 
+    })
+};
+
+
+
+
 //reference for menu to start over
-function startMenu () {
+function Menu (action) {
+    let act= action;
     inquirer
       .prompt([
         {
           // list of queries
           type: 'list',
           name: 'selection',
-          message: 'Welcome to the Employee Tracker. What do you want to do?',
+          message:  `${act} What do you want to do next?`,
           choices: [
             'View All Employees',
             'View All Roles',
