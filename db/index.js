@@ -85,7 +85,7 @@ function updateEmployeeRole() {
         const employee_id = res.employee_id;
         console.log(res);
         const role_id = res.role_id;
-        const sql = `UPDATE employees SET ? WHERE id = ${employee_id}`
+        const sql = `UPDATE employee SET ? WHERE id = ${employee_id}`
         db.query(sql, {role_id:res.role_id}, function (err, res) {
             if (err) {
                 console.log(err)
@@ -168,7 +168,7 @@ function Menu (action) {
 
 //exporting functions to used in other index file
 module.exports = {
-                addNewEmployee,
+                addNewEmployee,updateEmployeeRole,
                 //  addNewRole, addNewDept, removeEmployee, removeDept,
-                // updateEmployeeRole, viewRoles, viewDepartments
+                // ç viewRoles, viewDepartments
             }
