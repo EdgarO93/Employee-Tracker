@@ -59,7 +59,43 @@ addNewEmployee = () => {
 }
 
 
-// addNewRole
+// function to add new role
+function addNewRole() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: "title",
+                message: 'What is the role you want to add?',
+            },
+            {
+                type: 'input',
+                name: "salary",
+                message: 'What is the salary for this role?',
+            },
+            {
+                type: 'input',
+                name: "department_id",
+                message: 'What is the deparment ID this role belongs to?',
+            },
+        ])
+    .then(function(res) {
+        const title = res.title;
+        console.log(res);
+        const salary = res.salary;
+        const department_id = res.department_id;
+        const sql = `INSERT INTO role SET ?`
+        console.log(salary);
+        db.query(sql, {title:res.title, salary:res.salary, department_id:res.department_id}, function (err, res) {
+            if (err) {
+                console.log(err)
+            } else {
+                var action=`The role was added!`
+                Menu(action);
+            }
+        }); 
+    })
+  };
 // addNewDept
 // removeEmployee-last
 // removeDept- last
@@ -90,8 +126,8 @@ function updateEmployeeRole() {
             if (err) {
                 console.log(err)
             } else {
-                console.log(`The role was edited`);
-                Menu()
+                var action=`The role was edited!`
+                Menu(action)
             }
         }); 
     })
@@ -168,7 +204,7 @@ function Menu (action) {
 
 //exporting functions to used in other index file
 module.exports = {
-                addNewEmployee,updateEmployeeRole,
-                //  addNewRole, addNewDept, removeEmployee, removeDept,
+                addNewEmployee,updateEmployeeRole,addNewRole, 
+                // addNewDept, removeEmployee, removeDept,
                 // ç viewRoles, viewDepartments
             }
