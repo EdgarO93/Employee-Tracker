@@ -96,7 +96,32 @@ function addNewRole() {
         }); 
     })
   };
-// addNewDept
+
+
+// Add department
+function addNewDept() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: "department_name",
+                message: 'What is the name of the department you want to add?',
+            }
+        ])
+    .then(function(res) {
+        const department_name = res.department_name;
+        console.log(res);
+        const sql = `INSERT INTO department SET ?` 
+        db.query(sql, {department_name:res.department_name}, function (err, res) {
+            if (err) {
+                console.log(err)
+            } else {
+                var action=`${department_name} was added`;
+                Menu(action)
+            }
+        }); 
+    })
+  };
 // removeEmployee-last
 // removeDept- last
 // viewRoles
@@ -204,7 +229,7 @@ function Menu (action) {
 
 //exporting functions to used in other index file
 module.exports = {
-                addNewEmployee,updateEmployeeRole,addNewRole, 
-                // addNewDept, removeEmployee, removeDept,
+                addNewEmployee,updateEmployeeRole,addNewRole, addNewDept,
+                //removeEmployee, removeDept,
                 // ç viewRoles, viewDepartments
             }
