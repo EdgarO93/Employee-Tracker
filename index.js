@@ -6,7 +6,7 @@ const cTable = require('console.table');
 // Import the connection object
 const db = require('./db/connection');
 //might use to import functions
-const{ addNewEmployee,addNewRole,addNewDept,removeEmployee,removeDept,
+const{ addNewEmployee,addNewRole,addNewDept,viewEmployees,removeEmployee,removeDept,
   updateEmployeeRole,viewRoles,viewDepartments} = require('./db/index');
 
 
