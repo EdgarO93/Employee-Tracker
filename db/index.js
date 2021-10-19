@@ -245,7 +245,7 @@ function viewEmployees() {
         role.title, 
         role.salary,
         department.department_name,
-        concat(manager.first_name, " ", manager.last_name) AS manager_full_name
+        concat(IFNULL (manager.first_name, "NONE"), " ", IFNULL (manager.last_name,'NONE')) AS manager_full_name
         FROM employee 
         LEFT JOIN role ON employee.role_id = role.id
         LEFT JOIN department ON department.id = role.department_id
