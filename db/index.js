@@ -1,7 +1,7 @@
 const db = require('./connection');
 const inquirer = require("inquirer");
 const cTable = require('console.table');
-// const startMenu = require ('../index')
+
 
 //function to add new employee
 addNewEmployee = () => {
@@ -116,14 +116,14 @@ function addNewDept() {
             if (err) {
                 console.log(err)
             } else {
-                var action=`${department_name} was added`;
+                var action=`${department_name} was added!`;
                 Menu(action)
             }
         }); 
     })
   };
-// removeEmployee-last
-// removeDept- last
+// removeEmployee- later
+// removeDept- later
 
 
 // Update an employee's role
