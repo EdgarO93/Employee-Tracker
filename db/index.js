@@ -61,6 +61,19 @@ addNewEmployee = () => {
 
 // function to add new role
 function addNewRole() {
+       //array to for prompt choices
+       const departments = [];
+       const departmentsName = [];
+        //sql query to fill in array
+       const query = `SELECT id, department_name FROM department`;
+       db.query(query, (err, res) => {
+           if (err) throw err;
+           for (let i=0;i<res.length;i++) {
+               departments.push({
+                  id:res[i].id,
+                  name:res[i].department_name});
+               departmentsName.push(res[i].department_name);   
+       }
     inquirer
         .prompt([
             {
@@ -74,28 +87,33 @@ function addNewRole() {
                 message: 'What is the salary for this role?',
             },
             {
-                type: 'input',
-                name: "department_id",
-                message: 'What is the deparment ID this role belongs to?',
+                type: 'list',
+                name: "department_name",
+                message: 'Pick Department:',
+                choices: departmentsName
             },
         ])
     .then(function(res) {
         const title = res.title;
         console.log(res);
         const salary = res.salary;
-        const department_id = res.department_id;
+        //grabs ID from the department name that matches the one selected
+        let deptID = departments.find((obj) => obj.name === res.department_name).id;
+        // console.log(deptID);
+        // const department_name = res.department_name;
         const sql = `INSERT INTO role SET ?`
-        console.log(salary);
-        db.query(sql, {title:res.title, salary:res.salary, department_id:res.department_id}, function (err, res) {
+        // console.log(salary);
+        db.query(sql, {title:res.title, salary:res.salary, department_id:deptID}, function (err, res) {
             if (err) {
-                console.log(err)
+                throw err;
+                // console.log(err)
             } else {
                 var action=`The role was added!`
                 Menu(action);
             }
         }); 
     })
-  };
+  })};
 
 
 // Add department
