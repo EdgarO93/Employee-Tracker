@@ -164,6 +164,7 @@ function viewEmployees() {
         employee.last_name, 
         role.title, 
         role.salary,
+        department.department_name,
         employee.manager_id
         FROM employee 
         LEFT JOIN role ON employee.role_id = role.id`;
@@ -226,9 +227,9 @@ function Menu (action) {
             'Add a Role',
             'Add a Department',
             'Update an Employee Role',
-            'Remove Employee',
-            'Remove Role',
-            'Remove Department',
+            // 'Remove Employee',
+            // 'Remove Role',
+            // 'Remove Department',
             'Exit Program',
           ],
         },
@@ -248,12 +249,12 @@ function Menu (action) {
           case 'Remove Employee':
             removeEmployee();
             break;
-          case 'Remove Role':
-            removeRole();
-            break;
-          case 'Remove Department':
-            removeDept();
-            break;
+        //   case 'Remove Role':
+        //     removeRole();
+        //     break;
+        //   case 'Remove Department':
+        //     removeDept();
+        //     break;
           case 'Update an Employee Role':
             updateEmployeeRole();
             break;
