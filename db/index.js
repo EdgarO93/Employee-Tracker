@@ -165,12 +165,13 @@ function viewEmployees() {
         role.title, 
         role.salary,
         department.department_name,
-        employee.manager_id
+        concat(manager.first_name, " ", manager.last_name) AS manager_full_name
         FROM employee 
         LEFT JOIN role ON employee.role_id = role.id
-        LEFT JOIN department ON department.id = role.department_id`;
+        LEFT JOIN department ON department.id = role.department_id
+        LEFT JOIN employee AS manager ON employee.manager_id = manager.id;`;
   
-    // console.log(sql); LEFT JOIN department ON department.id = role.department_id`,
+    // console.log(sql);
     db.query(sql, (err, rows) => {
         if (err) {
             console.log(err)
