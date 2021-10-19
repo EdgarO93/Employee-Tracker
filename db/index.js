@@ -89,7 +89,7 @@ function addNewRole() {
             {
                 type: 'list',
                 name: "department_name",
-                message: 'Pick Department:',
+                message: 'Pick Department that this role belongs to:',
                 choices: departmentsName
             },
         ])
