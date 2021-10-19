@@ -10,11 +10,6 @@ const{ addNewEmployee,addNewRole,addNewDept,viewEmployees,removeEmployee,removeD
   updateEmployeeRole,viewRoles,viewDepartments} = require('./db/index');
 
 
-// Query database-test
-// db.query('SELECT * FROM department', function (err, results) {
-//    if(err){console.log(err);} else{ console.log("test",results)};
-//   });
-
 // function for the start menu to prompt user
 function startMenu () {
   inquirer
