@@ -32,9 +32,9 @@ function startMenu () {
           'Add a Role',
           'Add a Department',
           'Update an Employee Role',
-          'Remove Employee',
-          'Remove Role',
-          'Remove Department',
+          // 'Remove Employee',
+          // 'Remove Role',
+          // 'Remove Department',
           'Exit Program',
         ],
       },
@@ -51,15 +51,15 @@ function startMenu () {
         case 'Add a Department':
           addNewDept();
           break;
-        case 'Remove Employee':
-          removeEmployee();
-          break;
-        case 'Remove Role':
-          removeRole();
-          break;
-        case 'Remove Department':
-          removeDept();
-          break;
+        // case 'Remove Employee':
+        //   removeEmployee();
+        //   break;
+        // case 'Remove Role':
+        //   removeRole();
+        //   break;
+        // case 'Remove Department':
+        //   removeDept();
+        //   break;
         case 'Update an Employee Role':
           updateEmployeeRole();
           break;
