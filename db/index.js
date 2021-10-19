@@ -207,38 +207,98 @@ function addNewDept() {
 
 // Update an employee's role
 function updateEmployeeRole() {
-    inquirer
-        .prompt([
-            {
-                type: 'number',
-                name: "employee_id",
-                message: 'What is the employee ID you want to update?',
-            },
-            {
-                type: 'number',
-                name: "role_id",
-                message: 'What is the new role ID of this employee?',
-
-            }
-        ])
-        .then(function (res) {
-            const employee_id = res.employee_id;
-            console.log(res);
-            const role_id = res.role_id;
-            const sql = `UPDATE employee SET ? WHERE id = ${employee_id}`
-            db.query(sql, { role_id: res.role_id }, function (err, res) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    var action = `The role was edited!`
-                    Menu(action)
-                }
+    //query for Employees info
+    const query = `
+     SELECT employee.id AS employeeId, concat(employee.first_name, " ", employee.last_name) AS employeeFullName
+     FROM employee ;`;
+    db.query(query, (err, res) => {
+        if (err) throw err;
+        //extract employee names and ids to arrays
+        let employees = [];
+        let employeesNames = [];
+        for (let i = 0; i < res.length; i++) {
+            employees.push({
+                employeeId: res[i].employeeId,
+                fullName: res[i].employeeFullName
             });
-        })
-};
-// to see all employees
-function viewEmployees() {
-    const sql = `SELECT 
+            employeesNames.push(res[i].employeeFullName);
+        }
+        inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: "employeechoice",
+                    message: 'Select employee to update:',
+                    choices: employeesNames
+                }]).then(answer => {
+                    //get id of  employee chosen
+                    const chosenEmployee = answer.employeechoice;
+                    let chosenEmployeeId;
+                    for (let i = 0; i < employees.length; i++) {
+                        if (employees[i].fullName === chosenEmployee) {
+                            chosenEmployeeId = employees[i].employeeId;
+                            break;
+                        }
+                    }
+                    //sql query for roles
+                    const query = `SELECT role.title, role.id FROM role;`;
+                    db.query(query, (err, res) => {
+                        if (err) throw err;
+                        //get role names and ids to arrays
+                        const roles = [];
+                        const rolesNames = [];
+                        for (let i = 0; i < res.length; i++) {
+                            roles.push({
+                                roleId: res[i].id,
+                                title: res[i].title
+                            });
+                            rolesNames.push(res[i].title);
+                        }
+                        inquirer
+                            .prompt([
+
+                                {
+                                    type: 'list',
+                                    name: "newroll",
+                                    message: 'Pick new role:',
+                                    choices: rolesNames
+
+                                }
+                            ])
+                            .then(function (answer) {
+                                //get id of new role
+                                const chosenRole = answer.newroll;
+                                let chosenRoleId;
+                                for (let i = 0; i < roles.length; i++) {
+                                    if (roles[i].title === chosenRole) {
+                                        chosenRoleId = roles[i].roleId;
+                                    }
+                                }
+                                // console.log(chosenRoleId);
+                                const sql = `UPDATE employee SET ? WHERE ?`;
+                                db.query(sql, [{
+                                    role_id: chosenRoleId,
+                                },
+                                {
+                                    id: chosenEmployeeId
+                                }
+                                ], function (err, res) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
+                                        var action = `The role was updated to ${chosenRole}!`
+                                        Menu(action)
+                                    }
+                                });
+                            })
+                    })
+                });
+            })
+}
+
+        // to see all employees
+        function viewEmployees() {
+            const sql = `SELECT 
         employee.id,
         employee.first_name, 
         employee.last_name, 
@@ -251,115 +311,115 @@ function viewEmployees() {
         LEFT JOIN department ON department.id = role.department_id
         LEFT JOIN employee AS manager ON employee.manager_id = manager.id;`;
 
-    // console.log(sql);
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err)
+            // console.log(sql);
+            db.query(sql, (err, rows) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.table(rows);
+                let action = "Above is all the employees table."
+                Menu(action);
+            });
+        };
+
+        // View departments
+        function viewDepartments() {
+            const sql = `SELECT * FROM department`;
+            // console.log(sql);
+            db.query(sql, (err, rows) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.table(rows);
+                let action = "Above is all the departments table."
+                Menu(action);
+            });
+        };
+
+        // View roles
+        function viewRoles() {
+            const sql = `SELECT * FROM role`;
+            // console.log(sql);
+            db.query(sql, (err, rows) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.table(rows);
+                let action = "Above is all the roles table."
+                Menu(action);
+            });
+        };
+
+
+        //reference for menu to start over
+        function Menu(action) {
+            let act = action;
+            inquirer
+                .prompt([
+                    {
+                        // list of queries
+                        type: 'list',
+                        name: 'selection',
+                        message: `${act} What do you want to do next?`,
+                        choices: [
+                            'View All Employees',
+                            'View All Roles',
+                            'View All Departments',
+                            'Add an Employee',
+                            'Add a Role',
+                            'Add a Department',
+                            'Update an Employee Role',
+                            // 'Remove Employee',
+                            // 'Remove Role',
+                            // 'Remove Department',
+                            'Exit Program',
+                        ],
+                    },
+                ])
+                ///will connect each prompt to the function
+                .then((data) => {
+                    switch (data.selection) {
+                        case 'Add an Employee':
+                            addNewEmployee();
+                            break;
+                        case 'Add a Role':
+                            addNewRole();
+                            break;
+                        case 'Add a Department':
+                            addNewDept();
+                            break;
+                        case 'Remove Employee':
+                            removeEmployee();
+                            break;
+                        //   case 'Remove Role':
+                        //     removeRole();
+                        //     break;
+                        //   case 'Remove Department':
+                        //     removeDept();
+                        //     break;
+                        case 'Update an Employee Role':
+                            updateEmployeeRole();
+                            break;
+                        case 'View All Employees':
+                            viewEmployees();
+                            break;
+                        case 'View All Roles':
+                            viewRoles();
+                            break;
+                        case 'View All Departments':
+                            viewDepartments();
+                            break;
+                        default:
+                            console.log('Thank you for using!')
+                            db.end();
+                    }
+                });
+
+        };
+
+        //exporting functions to used in other index file
+        module.exports = {
+            addNewEmployee, updateEmployeeRole, addNewRole, addNewDept, viewEmployees, viewRoles, viewDepartments
+            //removeEmployee, removeDept,
+
         }
-        console.table(rows);
-        let action = "Above is all the employees table."
-        Menu(action);
-    });
-};
-
-// View departments
-function viewDepartments() {
-    const sql = `SELECT * FROM department`;
-    // console.log(sql);
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err)
-        }
-        console.table(rows);
-        let action = "Above is all the departments table."
-        Menu(action);
-    });
-};
-
-// View roles
-function viewRoles() {
-    const sql = `SELECT * FROM role`;
-    // console.log(sql);
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err)
-        }
-        console.table(rows);
-        let action = "Above is all the roles table."
-        Menu(action);
-    });
-};
-
-
-//reference for menu to start over
-function Menu(action) {
-    let act = action;
-    inquirer
-        .prompt([
-            {
-                // list of queries
-                type: 'list',
-                name: 'selection',
-                message: `${act} What do you want to do next?`,
-                choices: [
-                    'View All Employees',
-                    'View All Roles',
-                    'View All Departments',
-                    'Add an Employee',
-                    'Add a Role',
-                    'Add a Department',
-                    'Update an Employee Role',
-                    // 'Remove Employee',
-                    // 'Remove Role',
-                    // 'Remove Department',
-                    'Exit Program',
-                ],
-            },
-        ])
-        ///will connect each prompt to the function
-        .then((data) => {
-            switch (data.selection) {
-                case 'Add an Employee':
-                    addNewEmployee();
-                    break;
-                case 'Add a Role':
-                    addNewRole();
-                    break;
-                case 'Add a Department':
-                    addNewDept();
-                    break;
-                case 'Remove Employee':
-                    removeEmployee();
-                    break;
-                //   case 'Remove Role':
-                //     removeRole();
-                //     break;
-                //   case 'Remove Department':
-                //     removeDept();
-                //     break;
-                case 'Update an Employee Role':
-                    updateEmployeeRole();
-                    break;
-                case 'View All Employees':
-                    viewEmployees();
-                    break;
-                case 'View All Roles':
-                    viewRoles();
-                    break;
-                case 'View All Departments':
-                    viewDepartments();
-                    break;
-                default:
-                    console.log('Thank you for using!')
-                    db.end();
-            }
-        });
-
-};
-
-//exporting functions to used in other index file
-module.exports = {
-    addNewEmployee, updateEmployeeRole, addNewRole, addNewDept, viewEmployees, viewRoles, viewDepartments
-    //removeEmployee, removeDept,
-
-}
