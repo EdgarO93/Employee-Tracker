@@ -33,9 +33,9 @@ There are no tests.
 
 ###  Screenshot 
 View of Terminal
-![plot](assets/Images/image1.png)
-![plot](assets/Images/image2.png)
-![plot](assets/Images/image3.png)
+![plot](assets/images/image1.png)
+![plot](assets/images/image2.png)
+![plot](assets/images/image3.png)
 
 
 ## Video
