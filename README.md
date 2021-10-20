@@ -41,6 +41,10 @@ View of Terminal
 ## Video
 
 
+https://user-images.githubusercontent.com/87279051/138028109-2294683c-8643-4255-bd8d-5acbc5c0a08a.mp4
+
+
+
 <a href ="https://watch.screencastify.com/v/N5hVgUr3WzhNTuXzVu9T" target= "_blank" > Link to video. </a> 
 
 
