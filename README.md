@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-The Employee Tracker is powered by Node.js, Inquirer and MySQL. Users will be able to create employees, departments and roles as well as view them in a table. Users will also be able to update employee role. The use of MySQL allows the user to create databases and manage employees by the use of Node.JS and the Inquirer prompts. The use of the console table package lets users see the tables in their command line. This application was challenging to build, but was useful to see how to integrate MySQL with Node.js.  In future updates, I would like to add on to the functionality of the application by being able to update employee managers, view employees by managers or by department, delete departments, roles, and employees, and being able to view the total utilized budget of a department. 
+The Employee Tracker is powered by Node.js, Inquirer and MySQL. Users will be able to create employees, departments and roles as well as view them in a table. Users will also be able to update employee role. The use of MySQL allows the user to create databases and manage employees by the use of Node.JS and the Inquirer prompts. The use of the console table package lets users see the tables in their command line. This application was challenging to build, but was useful to see how to integrate MySQL with Node.js. In future updates, I would like to add on to the functionality of the application by being able to update employee managers, view employees by managers or by department, delete departments, roles, and employees, and being able to view the total utilized budget of a department. 
 
 ## Table of Contents
 
@@ -32,17 +32,16 @@ There are no tests.
 
 
 ###  Screenshot 
-
-
-
 View of Terminal
-
+![plot](assets/Images/image1.png)
+![plot](assets/Images/image2.png)
+![plot](assets/Images/image3.png)
 
 
 ## Video
 
 
-<a href ="" target= "_blank" > Link to video. </a> 
+<a href ="https://watch.screencastify.com/v/N5hVgUr3WzhNTuXzVu9T" target= "_blank" > Link to video. </a> 
 
 
 ###  License
