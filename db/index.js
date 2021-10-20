@@ -87,20 +87,22 @@ addNewEmployee = () => {
 
                             ]).then(function (res) {
                                 //get id of chosen manager
-                                const chosenManager = answer.managerPck;
+                                const chosenManager = res.managerPck;
                                 let chosenManagerID;
                                 for (let i = 0; i < managers.length; i++) {
                                     if (managers[i].fullName === chosenManager) {
                                         chosenManagerID = managers[i].id;
+                                        // newEmployee.managerID= chosenManagerID;
                                         break;
                                     }
                                 }//query to insert employee
                                 const query = "INSERT INTO employee SET ?";
+                                console.log(chosenManagerID)
                                 db.query(query, {
                                     first_name: newEmployee.firstName,
                                     last_name: newEmployee.lastName,
                                     role_id: newEmployee.roleID || 0,
-                                    manager_id: newEmployee.managerID || 0
+                                    manager_id: chosenManagerID || 0
                                 }, function (err, res) {
                                     if (err) {
                                         console.log(err)
