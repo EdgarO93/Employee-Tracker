@@ -21,7 +21,7 @@ The Employee Tracker is powered by Node.js, Inquirer and MySQL. Users will be ab
 After downloading this repository, go into the folder of this project. Then run npm install or i. 
 
 ### Usage
-First run mySQL and log into it. Source the schema.sql and the seed.sql. Update the connection file with your SQL credentials. You can then run the program by running node index.js and you will see prompts start appearing. 
+First run mySQL -u root -p and enter password. Source the schema.sql and the seed.sql. Update the connection file with your SQL credentials. You can then run the program by running node index.js and you will see prompts start appearing. 
 
 ### Contributing
 Feel free to fork or clone this repo and make your own versions.
